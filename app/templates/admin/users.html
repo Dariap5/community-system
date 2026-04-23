@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %} {% block title %}Пользователи{% endblock %} {% block content %}
+<div class="mb-6">
+    <h2 class="text-3xl font-semibold">Пользователи</h2>
+    <p class="text-sm text-slate-500 mt-1">Просмотр списка пользователей и их текущего состояния</p>
+</div>
+
+<section class="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+            <thead class="bg-slate-50 text-left text-slate-600">
+                <tr>
+                    <th class="px-4 py-3 font-medium">Username</th>
+                    <th class="px-4 py-3 font-medium">Telegram ID</th>
+                    <th class="px-4 py-3 font-medium">Воронка</th>
+                    <th class="px-4 py-3 font-medium">Шаг</th>
+                    <th class="px-4 py-3 font-medium">Теги</th>
+                    <th class="px-4 py-3 font-medium">Дата</th>
+                </tr>
+            </thead>
+            <tbody id="users-body" class="divide-y divide-slate-100"></tbody>
+        </table>
+    </div>
+</section>
+{% endblock %} {% block scripts %}
+<script src="/static/admin/users.js"></script>
+{% endblock %}

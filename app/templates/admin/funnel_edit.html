@@ -1,0 +1,71 @@
+{% extends "admin/base.html" %} {% block title %}Редактор воронки{% endblock %} {% block content %}
+<div class="mb-4">
+    <a href="/admin/{{ secret }}/funnels" class="text-sm text-slate-500 hover:underline">← К списку воронок</a>
+</div>
+
+<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
+    <div>
+        <h2 id="funnel-title" class="text-3xl font-semibold">{{ funnel_name }}</h2>
+        <p class="text-sm text-slate-500 mt-1">Настройки воронки и шаги</p>
+    </div>
+    <button id="btn-add-step" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">+ Добавить шаг</button>
+</div>
+
+<section class="mb-6 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+    <div class="grid gap-4 md:grid-cols-2">
+        <label class="block">
+            <span class="text-sm text-slate-600">Название</span>
+            <input id="funnel-name" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+        </label>
+        <label class="block">
+            <span class="text-sm text-slate-600">Ключ запуска</span>
+            <input id="funnel-key" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="welcome">
+            <p id="deeplink-preview" class="mt-1 text-xs text-slate-500"></p>
+        </label>
+        <label class="block">
+            <span class="text-sm text-slate-600">Поведение при повторном входе</span>
+            <select id="funnel-behavior" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+                <option value="deny">Не запускать параллельно</option>
+                <option value="allow">Разрешить параллельно</option>
+            </select>
+        </label>
+        <label class="flex items-center gap-2 pt-6 text-sm">
+            <input id="funnel-active" type="checkbox" class="rounded border-slate-300">
+            <span>Воронка активна</span>
+        </label>
+    </div>
+    <div class="mt-5">
+        <button id="btn-save-funnel" class="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-500">Сохранить настройки</button>
+    </div>
+</section>
+
+<section class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+    <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold">Шаги</h3>
+        <p class="text-xs text-slate-500">Перетаскивайте карточки, чтобы менять порядок</p>
+    </div>
+    <div id="steps-list" class="space-y-3"></div>
+</section>
+
+<div id="add-step-modal" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/50 p-4">
+    <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+        <h3 class="text-xl font-semibold">Новый шаг</h3>
+        <div class="mt-4 space-y-4">
+            <label class="block">
+                <span class="text-sm text-slate-600">Название</span>
+                <input id="step-name" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="Приветствие">
+            </label>
+            <label class="block">
+                <span class="text-sm text-slate-600">Технический ключ</span>
+                <input id="step-key" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="welcome_intro">
+            </label>
+        </div>
+        <div class="mt-6 flex justify-end gap-2">
+            <button id="cancel-add-step" class="rounded-lg border border-slate-300 px-4 py-2 text-sm hover:bg-slate-50">Отмена</button>
+            <button id="confirm-add-step" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">Создать</button>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="/static/admin/funnel_editor.js"></script>
+{% endblock %}
