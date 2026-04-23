@@ -1,0 +1,71 @@
+{% extends "admin/base.html" %} {% block title %}Редактор шага{% endblock %} {% block content %}
+<div class="mb-4">
+    <a href="/admin/{{ secret }}/funnels/{{ funnel_id }}" class="text-sm text-slate-500 hover:underline">← К шагам воронки</a>
+</div>
+
+<div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div>
+        <h2 id="step-title" class="text-3xl font-semibold">{{ step_name }}</h2>
+        <p class="text-sm text-slate-500 mt-1">Тексты, фото, документы, кнопки и настройки шага</p>
+    </div>
+    <button id="btn-save" class="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-500">Сохранить</button>
+</div>
+
+<section class="mb-6 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+    <div class="grid gap-4 md:grid-cols-2">
+        <label class="block">
+            <span class="text-sm text-slate-600">Название</span>
+            <input id="name" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+        </label>
+        <label class="block">
+            <span class="text-sm text-slate-600">Ключ</span>
+            <input id="step_key" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+        </label>
+        <label class="block">
+            <span class="text-sm text-slate-600">Задержка перед шагом, сек</span>
+            <input id="delay_before" type="number" min="0" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+        </label>
+        <label class="flex items-center gap-2 pt-6 text-sm">
+            <input id="is_active" type="checkbox" class="rounded border-slate-300">
+            <span>Шаг активен</span>
+        </label>
+        <label class="flex items-center gap-2 text-sm">
+            <input id="wait_for_payment" type="checkbox" class="rounded border-slate-300">
+            <span>Ждать оплату</span>
+        </label>
+        <label class="block">
+            <span class="text-sm text-slate-600">Теги после шага</span>
+            <input id="add_tags" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="track_career, vip">
+        </label>
+        <label class="block md:col-span-2">
+            <span class="text-sm text-slate-600">Следующий шаг</span>
+            <select id="next_step" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">
+                <option value="auto">Автоматически</option>
+                <option value="end">Конец воронки</option>
+            </select>
+        </label>
+    </div>
+</section>
+
+<section class="mb-6 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+    <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold">Сообщения</h3>
+        <div class="flex flex-wrap gap-2 text-sm">
+            <button class="add-msg rounded-lg border border-slate-300 px-3 py-2 hover:bg-slate-50" data-type="text">+ Текст</button>
+            <button class="add-msg rounded-lg border border-slate-300 px-3 py-2 hover:bg-slate-50" data-type="photo">+ Фото</button>
+            <button class="add-msg rounded-lg border border-slate-300 px-3 py-2 hover:bg-slate-50" data-type="document">+ Документ</button>
+        </div>
+    </div>
+    <div id="messages-list" class="space-y-3"></div>
+</section>
+
+<section class="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+    <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-semibold">Кнопки</h3>
+        <button id="add-btn" class="rounded-lg border border-slate-300 px-3 py-2 text-sm hover:bg-slate-50">+ Добавить кнопку</button>
+    </div>
+    <div id="buttons-list" class="space-y-3"></div>
+</section>
+{% endblock %} {% block scripts %}
+<script src="/static/admin/step_editor.js"></script>
+{% endblock %}

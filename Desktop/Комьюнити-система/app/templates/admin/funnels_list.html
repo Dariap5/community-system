@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %} {% block title %}Воронки{% endblock %} {% block content %}
+<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
+    <div>
+        <h2 class="text-3xl font-semibold">Воронки</h2>
+        <p class="text-sm text-slate-500 mt-1">Список, создание, архивирование и дублирование</p>
+    </div>
+    <div class="flex items-center gap-3">
+        <label class="inline-flex items-center gap-2 text-sm text-slate-600">
+            <input id="show-archived" type="checkbox" class="rounded border-slate-300">
+            Показать архив
+        </label>
+        <button id="btn-create" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">+ Создать</button>
+    </div>
+</div>
+
+<div id="funnels-list" class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+
+<div id="create-modal" class="fixed inset-0 z-40 hidden items-center justify-center bg-black/50 p-4">
+    <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+        <h3 class="text-xl font-semibold">Создать воронку</h3>
+        <div class="mt-4 space-y-4">
+            <label class="block">
+                <span class="text-sm text-slate-600">Название</span>
+                <input id="new-name" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="Моя воронка">
+            </label>
+            <label class="block">
+                <span class="text-sm text-slate-600">Ключ запуска</span>
+                <input id="new-key" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="my_funnel">
+                <p class="mt-1 text-xs text-slate-500">Только a-z, 0-9 и подчёркивание</p>
+            </label>
+        </div>
+        <div class="mt-6 flex justify-end gap-2">
+            <button id="cancel-create" class="rounded-lg border border-slate-300 px-4 py-2 text-sm hover:bg-slate-50">Отмена</button>
+            <button id="confirm-create" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">Создать</button>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts %}
+<script src="/static/admin/funnels_list.js"></script>
+{% endblock %}

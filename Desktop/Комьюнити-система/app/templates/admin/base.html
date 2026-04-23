@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Админка{% endblock %} — Community Bot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block head %}{% endblock %}
+</head>
+
+<body class="min-h-screen bg-slate-100 text-slate-900">
+    <div class="min-h-screen flex">
+        <aside class="w-64 shrink-0 bg-slate-950 text-slate-100">
+            <div class="p-5 border-b border-slate-800">
+                <div class="text-lg font-semibold">Community Bot</div>
+                <div class="text-xs text-slate-400 mt-1">Админка по secret path</div>
+            </div>
+            <nav class="p-3 space-y-1 text-sm">
+                <a href="/admin/{{ secret }}/funnels" class="block rounded px-3 py-2 hover:bg-slate-800">Воронки</a>
+                <a href="/admin/{{ secret }}/users" class="block rounded px-3 py-2 hover:bg-slate-800">Пользователи</a>
+                <a href="/admin/{{ secret }}/analytics" class="block rounded px-3 py-2 hover:bg-slate-800">Аналитика</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-6 md:p-8 xl:p-10">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+        window.API_BASE = {
+            {
+                api_base | tojson
+            }
+        };
+        window.ADMIN_SECRET = {
+            {
+                secret | tojson
+            }
+        };
+        window.PAGE_DATA = {
+            {
+                page_data | tojson
+            }
+        };
+    </script>
+    <script src="/static/admin/common.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
