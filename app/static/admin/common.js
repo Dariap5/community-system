@@ -1,7 +1,7 @@
 const API = {
     base: window.API_BASE,
 
-    asyncget(path) {
+    async get(path) {
         const res = await fetch(this.base + path);
         if (!res.ok) throw await this._err(res);
         return res.json();
@@ -45,7 +45,7 @@ const API = {
     async _err(res) {
         try {
             const data = await res.json();
-            return new Error(data.error ? .message || `HTTP ${res.status}`);
+            return new Error(data.error?.message || `HTTP ${res.status}`);
         } catch {
             return new Error(`HTTP ${res.status}`);
         }

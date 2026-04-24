@@ -29,21 +29,9 @@
     </div>
 
     <script>
-        window.API_BASE = {
-            {
-                api_base | tojson
-            }
-        };
-        window.ADMIN_SECRET = {
-            {
-                secret | tojson
-            }
-        };
-        window.PAGE_DATA = {
-            {
-                page_data | tojson
-            }
-        };
+        window.API_BASE = {{ api_base | tojson }};
+        window.ADMIN_SECRET = {{ secret | tojson }};
+        window.PAGE_DATA = {{ page_data | tojson }};
     </script>
     <script src="/static/admin/common.js"></script>
     {% block scripts %}{% endblock %}
