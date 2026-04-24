@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -20,6 +21,7 @@ def _ctx(request: Request, secret: str, **extra: object) -> dict[str, object]:
         "request": request,
         "secret": secret,
         "api_base": f"/api/{secret}",
+        "assets_version": datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
         "page_data": {"secret": secret, **extra},
         **extra,
     }

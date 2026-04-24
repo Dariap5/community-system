@@ -9,7 +9,7 @@
             <input id="show-archived" type="checkbox" class="rounded border-slate-300">
             Показать архив
         </label>
-        <button id="btn-create" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">+ Создать</button>
+        <button id="btn-create" type="button" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">+ Создать</button>
     </div>
 </div>
 
@@ -30,11 +30,11 @@
             </label>
         </div>
         <div class="mt-6 flex justify-end gap-2">
-            <button id="cancel-create" class="rounded-lg border border-slate-300 px-4 py-2 text-sm hover:bg-slate-50">Отмена</button>
-            <button id="confirm-create" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">Создать</button>
+            <button id="cancel-create" type="button" class="rounded-lg border border-slate-300 px-4 py-2 text-sm hover:bg-slate-50">Отмена</button>
+            <button id="confirm-create" type="button" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">Создать</button>
         </div>
     </div>
 </div>
 {% endblock %} {% block scripts %}
-<script src="/static/admin/funnels_list.js"></script>
+<script src="/static/admin/funnels_list.js?v={{ assets_version }}"></script>
 {% endblock %}

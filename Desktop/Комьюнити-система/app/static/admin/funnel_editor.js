@@ -111,7 +111,7 @@ async function loadFunnel() {
                 </div>
                 <div class="flex shrink-0 items-center gap-2">
                     <a href="/admin/${funnelEditorState.secret}/funnels/${funnelId}/steps/${step.id}" class="rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-100">Редактировать</a>
-                    <button class="delete-step rounded-lg border border-rose-200 px-3 py-2 text-sm text-rose-700 hover:bg-rose-50" data-step-id="${step.id}">Удалить</button>
+                    <button type="button" class="delete-step rounded-lg border border-rose-200 px-3 py-2 text-sm text-rose-700 hover:bg-rose-50" data-step-id="${step.id}">Удалить</button>
                 </div>
             </div>
         `;
@@ -138,7 +138,9 @@ async function loadFunnel() {
 }
 
 document.getElementById('funnel-key').addEventListener('input', (event) => updateDeeplinkPreview(event.currentTarget.value.trim()));
-document.getElementById('btn-save-funnel').addEventListener('click', async() => {
+document.getElementById('btn-save-funnel').type = 'button';
+document.getElementById('btn-save-funnel').addEventListener('click', async(event) => {
+    event.preventDefault();
     try {
         await API.patch(`/funnels/${funnelId}`, {
             name: document.getElementById('funnel-name').value.trim(),
@@ -152,14 +154,24 @@ document.getElementById('btn-save-funnel').addEventListener('click', async() => 
     }
 });
 
-document.getElementById('btn-add-step').addEventListener('click', openStepModal);
-document.getElementById('cancel-add-step').addEventListener('click', closeStepModal);
+document.getElementById('btn-add-step').type = 'button';
+document.getElementById('btn-add-step').addEventListener('click', (event) => {
+    event.preventDefault();
+    openStepModal();
+});
+document.getElementById('cancel-add-step').type = 'button';
+document.getElementById('cancel-add-step').addEventListener('click', (event) => {
+    event.preventDefault();
+    closeStepModal();
+});
 addStepModal.addEventListener('click', (event) => {
     if (event.target === addStepModal) {
         closeStepModal();
     }
 });
-document.getElementById('confirm-add-step').addEventListener('click', async() => {
+document.getElementById('confirm-add-step').type = 'button';
+document.getElementById('confirm-add-step').addEventListener('click', async(event) => {
+    event.preventDefault();
     const name = document.getElementById('step-name').value.trim();
     const stepKey = document.getElementById('step-key').value.trim();
 

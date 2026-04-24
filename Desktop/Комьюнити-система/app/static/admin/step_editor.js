@@ -32,9 +32,9 @@ function renderMessages() {
                 <span class="font-medium">${message.type === 'text' ? 'Текст' : message.type === 'photo' ? 'Фото' : 'Документ'}</span>
             </div>
             <div class="flex gap-2 text-sm">
-                <button class="move-up rounded-lg border border-slate-300 px-2 py-1 ${index === 0 ? 'opacity-40' : ''}" data-index="${index}" ${index === 0 ? 'disabled' : ''}>↑</button>
-                <button class="move-down rounded-lg border border-slate-300 px-2 py-1 ${index === editorState.messages.length - 1 ? 'opacity-40' : ''}" data-index="${index}" ${index === editorState.messages.length - 1 ? 'disabled' : ''}>↓</button>
-                <button class="delete-message rounded-lg border border-rose-200 px-2 py-1 text-rose-700" data-index="${index}">×</button>
+                <button type="button" class="move-up rounded-lg border border-slate-300 px-2 py-1 ${index === 0 ? 'opacity-40' : ''}" data-index="${index}" ${index === 0 ? 'disabled' : ''}>↑</button>
+                <button type="button" class="move-down rounded-lg border border-slate-300 px-2 py-1 ${index === editorState.messages.length - 1 ? 'opacity-40' : ''}" data-index="${index}" ${index === editorState.messages.length - 1 ? 'disabled' : ''}>↓</button>
+                <button type="button" class="delete-message rounded-lg border border-rose-200 px-2 py-1 text-rose-700" data-index="${index}">×</button>
             </div>
         `;
         card.appendChild(controls);
@@ -82,14 +82,16 @@ function renderMessages() {
     });
 
     list.querySelectorAll('.delete-message').forEach((button) => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
             editorState.messages.splice(Number(button.dataset.index), 1);
             renderMessages();
         });
     });
 
     list.querySelectorAll('.move-up').forEach((button) => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
             const index = Number(button.dataset.index);
             if (index <= 0) return;
             [editorState.messages[index - 1], editorState.messages[index]] = [editorState.messages[index], editorState.messages[index - 1]];
@@ -98,7 +100,8 @@ function renderMessages() {
     });
 
     list.querySelectorAll('.move-down').forEach((button) => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
             const index = Number(button.dataset.index);
             if (index >= editorState.messages.length - 1) return;
             [editorState.messages[index + 1], editorState.messages[index]] = [editorState.messages[index], editorState.messages[index + 1]];
@@ -122,7 +125,7 @@ function renderButtons() {
         card.innerHTML = `
             <div class="mb-3 flex items-center justify-between gap-3">
                 <span class="font-medium">Кнопка ${index + 1}</span>
-                <button class="delete-button rounded-lg border border-rose-200 px-2 py-1 text-sm text-rose-700" data-index="${index}">Удалить</button>
+                <button type="button" class="delete-button rounded-lg border border-rose-200 px-2 py-1 text-sm text-rose-700" data-index="${index}">Удалить</button>
             </div>
             <div class="grid gap-3 md:grid-cols-3">
                 <input class="button-text rounded-lg border border-slate-300 px-3 py-2 text-sm" placeholder="Текст кнопки" value="${escapeHtml(button.text || '')}">
@@ -151,7 +154,8 @@ function renderButtons() {
     });
 
     list.querySelectorAll('.delete-button').forEach((button) => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
             editorState.buttons.splice(Number(button.dataset.index), 1);
             renderButtons();
         });
@@ -192,8 +196,8 @@ async function loadStep() {
                 editorState.buttons.push({
                     id: button.id || newId(),
                     text: button.text || '',
-                    action_type: button.action?.type || 'url',
-                    action_value: button.action?.value || '',
+                    action_type: button.action ? .type || 'url',
+                    action_value: button.action ? .value || '',
                 });
             }
             continue;
@@ -214,7 +218,9 @@ async function loadStep() {
 }
 
 document.querySelectorAll('.add-msg').forEach((button) => {
-    button.addEventListener('click', () => {
+    button.type = 'button';
+    button.addEventListener('click', (event) => {
+        event.preventDefault();
         editorState.messages.push({
             id: newId(),
             type: button.dataset.type,
@@ -227,7 +233,9 @@ document.querySelectorAll('.add-msg').forEach((button) => {
     });
 });
 
-document.getElementById('add-btn').addEventListener('click', () => {
+document.getElementById('add-btn').type = 'button';
+document.getElementById('add-btn').addEventListener('click', (event) => {
+    event.preventDefault();
     editorState.buttons.push({
         id: newId(),
         text: '',
@@ -237,7 +245,9 @@ document.getElementById('add-btn').addEventListener('click', () => {
     renderButtons();
 });
 
-document.getElementById('btn-save').addEventListener('click', async() => {
+document.getElementById('btn-save').type = 'button';
+document.getElementById('btn-save').addEventListener('click', async(event) => {
+    event.preventDefault();
     const blocks = editorState.messages.map((message) => {
         const block = {
             id: message.id,

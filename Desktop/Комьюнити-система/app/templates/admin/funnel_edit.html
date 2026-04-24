@@ -8,7 +8,7 @@
         <h2 id="funnel-title" class="text-3xl font-semibold">{{ funnel_name }}</h2>
         <p class="text-sm text-slate-500 mt-1">Настройки воронки и шаги</p>
     </div>
-    <button id="btn-add-step" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">+ Добавить шаг</button>
+    <button id="btn-add-step" type="button" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">+ Добавить шаг</button>
 </div>
 
 <section class="mb-6 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
@@ -61,11 +61,11 @@
             </label>
         </div>
         <div class="mt-6 flex justify-end gap-2">
-            <button id="cancel-add-step" class="rounded-lg border border-slate-300 px-4 py-2 text-sm hover:bg-slate-50">Отмена</button>
-            <button id="confirm-add-step" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">Создать</button>
+            <button id="cancel-add-step" type="button" class="rounded-lg border border-slate-300 px-4 py-2 text-sm hover:bg-slate-50">Отмена</button>
+            <button id="confirm-add-step" type="button" class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">Создать</button>
         </div>
     </div>
 </div>
 {% endblock %} {% block scripts %}
-<script src="/static/admin/funnel_editor.js"></script>
+<script src="/static/admin/funnel_editor.js?v={{ assets_version }}"></script>
 {% endblock %}

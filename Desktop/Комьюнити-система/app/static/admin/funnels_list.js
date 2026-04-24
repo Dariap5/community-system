@@ -44,8 +44,8 @@ async function loadFunnels() {
             </div>
             <div class="flex gap-2">
                 <a href="/admin/${funnelsListState.secret}/funnels/${funnel.id}" class="flex-1 rounded-lg bg-slate-900 px-3 py-2 text-center text-sm font-medium text-white hover:bg-slate-700">Открыть</a>
-                <button class="rounded-lg border border-slate-300 px-3 py-2 text-sm hover:bg-slate-50 duplicate-funnel" data-id="${funnel.id}">Дубль</button>
-                <button class="rounded-lg border border-rose-200 px-3 py-2 text-sm text-rose-700 hover:bg-rose-50 archive-funnel" data-id="${funnel.id}" ${funnel.is_archived ? 'disabled' : ''}>Архив</button>
+                <button type="button" class="rounded-lg border border-slate-300 px-3 py-2 text-sm hover:bg-slate-50 duplicate-funnel" data-id="${funnel.id}">Дубль</button>
+                <button type="button" class="rounded-lg border border-rose-200 px-3 py-2 text-sm text-rose-700 hover:bg-rose-50 archive-funnel" data-id="${funnel.id}" ${funnel.is_archived ? 'disabled' : ''}>Архив</button>
             </div>
         `;
         funnelsContainer.appendChild(card);
@@ -66,6 +66,7 @@ async function loadFunnels() {
 
     funnelsContainer.querySelectorAll('.duplicate-funnel').forEach((element) => {
         element.addEventListener('click', async (event) => {
+            event.preventDefault();
             try {
                 await API.post(`/funnels/${event.currentTarget.dataset.id}/duplicate`);
                 toast('Воронка скопирована', 'success');
@@ -78,6 +79,7 @@ async function loadFunnels() {
 
     funnelsContainer.querySelectorAll('.archive-funnel').forEach((element) => {
         element.addEventListener('click', async (event) => {
+            event.preventDefault();
             if (!confirmAction('Архивировать воронку?')) {
                 return;
             }
@@ -92,14 +94,24 @@ async function loadFunnels() {
     });
 }
 
-document.getElementById('btn-create').addEventListener('click', openCreateModal);
-document.getElementById('cancel-create').addEventListener('click', closeCreateModal);
+document.getElementById('btn-create').type = 'button';
+document.getElementById('btn-create').addEventListener('click', (event) => {
+    event.preventDefault();
+    openCreateModal();
+});
+document.getElementById('cancel-create').type = 'button';
+document.getElementById('cancel-create').addEventListener('click', (event) => {
+    event.preventDefault();
+    closeCreateModal();
+});
 createModal.addEventListener('click', (event) => {
     if (event.target === createModal) {
         closeCreateModal();
     }
 });
-document.getElementById('confirm-create').addEventListener('click', async () => {
+document.getElementById('confirm-create').type = 'button';
+document.getElementById('confirm-create').addEventListener('click', async (event) => {
+    event.preventDefault();
     const name = document.getElementById('new-name').value.trim();
     const entryKey = document.getElementById('new-key').value.trim();
 
