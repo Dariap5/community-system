@@ -37,10 +37,10 @@ sudo ufw --force enable
 ## 3. Clone into a separate folder
 
 ```bash
-sudo mkdir -p /var/www/community-bot
-sudo chown -R "$USER:$USER" /var/www/community-bot
-cd /var/www/community-bot
-git clone https://github.com/YOUR_USER/community-bot.git .
+sudo mkdir -p /var/www/community-system-new
+sudo chown -R "$USER:$USER" /var/www/community-system-new
+cd /var/www/community-system-new
+git clone https://github.com/YOUR_USER/community-system.git .
 cp .env.example .env
 nano .env
 ```
@@ -72,6 +72,7 @@ ALERT_TELEGRAM_CHAT_ID=<your-telegram-id>
 ```bash
 docker compose up -d --build
 docker compose ps
+sleep 15
 curl http://localhost:8000/health
 curl -I http://localhost:8000/admin/<ADMIN_SECRET_PATH>/funnels
 ```
@@ -119,8 +120,8 @@ Backup script: [`deploy/backup.sh`](../deploy/backup.sh)
 Example cron entries:
 
 ```bash
-*/5 * * * * cd /var/www/community-bot && bash deploy/healthcheck.sh
-0 3 * * * cd /var/www/community-bot && bash deploy/backup.sh
+*/5 * * * * cd /var/www/community-system-new && bash deploy/healthcheck.sh
+0 3 * * * cd /var/www/community-system-new && bash deploy/backup.sh
 ```
 
 ## 9. Verify end to end

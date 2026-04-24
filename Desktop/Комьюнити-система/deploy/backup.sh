@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-PROJECT_DIR="/var/www/community-bot"
+PROJECT_DIR="/var/www/community-system-new"
 BACKUP_DIR="/var/backups/community-bot"
 RETENTION_DAYS="${RETENTION_DAYS:-7}"
 

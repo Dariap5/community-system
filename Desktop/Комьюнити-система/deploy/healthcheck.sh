@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-PROJECT_DIR="/var/www/community-bot"
+PROJECT_DIR="/var/www/community-system-new"
 HEALTH_URL="${HEALTH_URL:-http://localhost:8000/health}"
 
 if [[ -f "$PROJECT_DIR/.env" ]]; then
