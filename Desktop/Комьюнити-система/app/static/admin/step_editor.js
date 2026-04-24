@@ -192,8 +192,8 @@ async function loadStep() {
                 editorState.buttons.push({
                     id: button.id || newId(),
                     text: button.text || '',
-                    action_type: button.action ? .type || 'url',
-                    action_value: button.action ? .value || '',
+                    action_type: button.action?.type || 'url',
+                    action_value: button.action?.value || '',
                 });
             }
             continue;

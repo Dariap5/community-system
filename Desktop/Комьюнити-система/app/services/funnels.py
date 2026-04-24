@@ -12,6 +12,10 @@ from app.db.models import Funnel, FunnelCrossEntryBehavior, FunnelStatus, Funnel
 from app.schemas.step_config import StepConfig, TextMessage
 
 
+def _cross_entry_behavior_value(value: object) -> str:
+    return value.value if hasattr(value, "value") else str(value)
+
+
 async def get_funnel_with_stats(db: AsyncSession, funnel_id: UUID) -> dict[str, object] | None:
     funnel = await db.get(Funnel, funnel_id)
     if funnel is None:
@@ -34,7 +38,7 @@ async def get_funnel_with_stats(db: AsyncSession, funnel_id: UUID) -> dict[str, 
         "entry_key": funnel.entry_key,
         "is_active": funnel.is_active,
         "is_archived": funnel.is_archived,
-        "cross_entry_behavior": funnel.cross_entry_behavior.value,
+        "cross_entry_behavior": _cross_entry_behavior_value(funnel.cross_entry_behavior),
         "created_at": funnel.created_at,
         "updated_at": funnel.updated_at,
         "steps_count": steps_count,
@@ -80,7 +84,7 @@ async def duplicate_funnel(db: AsyncSession, source_id: UUID) -> Funnel | None:
         entry_key=None,
         is_active=False,
         is_archived=False,
-        cross_entry_behavior=source.cross_entry_behavior,
+        cross_entry_behavior=_cross_entry_behavior_value(source.cross_entry_behavior),
     )
     db.add(new_funnel)
     await db.flush()

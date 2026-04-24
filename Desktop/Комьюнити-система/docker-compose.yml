@@ -72,11 +72,27 @@ services:
     command: uvicorn app.api.main:app --host 0.0.0.0 --port 8000
     env_file: .env
     ports:
-      - "127.0.0.1:8000:8000"
+      - "8000:8000"
     depends_on:
       init-db:
         condition: service_completed_successfully
     restart: unless-stopped
+
+  tests:
+    build: .
+    profiles: ["tests"]
+    command: sh -c "pip install -e \".[dev]\" && pytest tests/ -v"
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      init-db:
+        condition: service_completed_successfully
+    volumes:
+      - ./tests:/app/tests:ro
+    restart: "no"
 
 volumes:
   db_data:
