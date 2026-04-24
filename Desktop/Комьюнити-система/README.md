@@ -160,7 +160,7 @@ Telegram-бот, FastAPI API и админка для воронок, оплат
 1. Скопируй `.env.example` в `.env` и заполни секреты и URL-ы. Минимум нужны `BOT_TOKEN`, `ADMIN_SECRET_PATH`, `DATABASE_URL`, `REDIS_URL`, `COMMUNITY_CHAT_URL`, `TRACK_CAREER_URL`, `TRACK_BUSINESS_URL`, `TRACK_SELFDEV_URL`, `SUPPORT_USERNAME`, `OFFER_URL`, `DEFAULT_FUNNEL_KEY`.
 2. Подними весь стек: `docker compose -f docker-compose.yml -p community-bot up -d --build`.
 3. Проверь здоровье API: `curl http://localhost:8000/health`.
-4. Проверь админку: `curl -I http://localhost:8000/admin/<ADMIN_SECRET_PATH>/funnels`.
+4. Проверь админку: `curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8000/admin/<ADMIN_SECRET_PATH>/funnels`.
 5. Для smoke tests поставь dev-зависимости внутри контейнера и прогони `pytest` из compose-сети.
 
 ## Production deploy

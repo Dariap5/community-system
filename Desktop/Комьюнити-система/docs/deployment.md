@@ -74,7 +74,7 @@ docker compose up -d --build
 docker compose ps
 sleep 15
 curl http://localhost:8000/health
-curl -I http://localhost:8000/admin/<ADMIN_SECRET_PATH>/funnels
+curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8000/admin/<ADMIN_SECRET_PATH>/funnels
 ```
 
 The API port is bound to `127.0.0.1:8000`, so nginx can proxy to it without exposing Docker directly to the internet.
@@ -129,7 +129,7 @@ Example cron entries:
 ```bash
 curl -s "https://api.telegram.org/bot${BOT_TOKEN}/getMe"
 curl https://admin.yoursite.ru/health
-curl -I https://admin.yoursite.ru/admin/<ADMIN_SECRET_PATH>/funnels
+curl -s -o /dev/null -w "%{http_code}\n" https://admin.yoursite.ru/admin/<ADMIN_SECRET_PATH>/funnels
 curl -X POST https://admin.yoursite.ru/payments/webhook -H "Content-Type: application/json" -d '{"event":"test"}'
 docker compose ps
 ```
